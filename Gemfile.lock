@@ -3,7 +3,6 @@ GEM
   specs:
     minitest (4.7.0)
     rake (10.0.3)
-    trollop (2.0)
 
 PLATFORMS
   ruby
@@ -11,4 +10,3 @@ PLATFORMS
 DEPENDENCIES
   minitest
   rake
-  trollop
