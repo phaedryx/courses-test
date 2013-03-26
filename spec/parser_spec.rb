@@ -61,7 +61,7 @@ describe Parser do
     end
 
     it "must import enrollment files" do
-      enrollment = Enrollment.new(course_id: "C126767", user_id: "U511908", state: "active")
+      enrollment = Enrollment.new(course_id: "C628944", user_id: "U531649", state: "active")
       @parser.import_file!("test_data/enrollment.csv")
       @parser.enrollments.include?(enrollment).must_equal true
     end
@@ -109,8 +109,10 @@ describe Parser do
   describe "#active_enrollments" do
     it "must return active enrollments" do
       parser = Parser.new
-      enrollment = Enrollment.new(course_id: "C300581", user_id: "U824115")
-      parser.import_file!("data/003.csv")
+      enrollment = Enrollment.new(course_id: "C628944", user_id: "U531649")
+      parser.import_file!("test_data/course.csv")
+      parser.import_file!("test_data/user.csv")
+      parser.import_file!("test_data/enrollment.csv")
       parser.active_enrollments.include?(enrollment).must_equal true
     end
   end

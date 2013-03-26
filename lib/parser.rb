@@ -50,7 +50,10 @@ class Parser
   end
 
   def active_enrollments
-    @enrollments.find_all {|e| e.state == "active"}
+    @enrollments.
+      find_all {|e| e.state == "active" }.
+      find_all {|e| active_courses.map(&:course_id).include?(e.course_id) }.
+      find_all {|e| active_users.map(&:user_id).include?(e.user_id) }
   end
 
   def active_users
