@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require './lib/parser'
+
+parser = Parser.new
+data_dir = "./data"
+# import all the csv files
+Dir.entries(data_dir).find_all {|f| f =~ /\.csv/}.sort.each do |file_name|
+  puts file_name
+  parser.import_file!("#{data_dir}/#{file_name}")
+end
+
+# output courses with enrolled students
+parser.active_enrollments.each do ||
+
+end

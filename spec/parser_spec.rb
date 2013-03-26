@@ -83,6 +83,8 @@ describe Parser do
 
     it "must replace an enrollment with its modified version if encountered" do
       parser = Parser.new
+      parser.import_file!("test_data/course.csv")
+      parser.import_file!("test_data/user.csv")
       parser.import_file!("test_data/enrollment.csv")
       parser.import_file!("test_data/modified_enrollment.csv")
       parser.enrollments.size.must_equal 1 # replace, not appended

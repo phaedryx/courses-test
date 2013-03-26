@@ -71,6 +71,7 @@ private
     CSV.foreach(path, headers: true) do |row|
       course     = @courses.find {|c| c.course_id == row["course_id"]}
       user       = @users.find {|u| u.user_id == row["user_id"]}
+      next unless course && user
       enrollment = Enrollment.new(course: course, user: user, state: row["state"])
       index      = @enrollments.index(enrollment)
 
