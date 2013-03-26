@@ -45,6 +45,18 @@ class Parser
     file_headers == USERS_HEADERS
   end
 
+  def active_courses
+    @courses.find_all {|c| c.state == "active"}
+  end
+
+  def active_enrollments
+    @enrollments.find_all {|e| e.state == "active"}
+  end
+
+  def active_users
+    @users.find_all {|u| u.state == "active"}
+  end
+
 private
   def import_courses(path)
     CSV.foreach(path, headers: true) do |row|

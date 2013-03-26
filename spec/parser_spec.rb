@@ -96,4 +96,31 @@ describe Parser do
       parser.users.first.user_name.must_equal "Noah J. Thomas"
     end
   end
+
+  describe "#active_courses" do
+    it "must return active courses" do
+      parser = Parser.new
+      course = Course.new(course_id: "C732380")
+      parser.import_file!("data/001.csv")
+      parser.active_courses.include?(course).must_equal true
+    end
+  end
+
+  describe "#active_enrollments" do
+    it "must return active enrollments" do
+      parser = Parser.new
+      enrollment = Enrollment.new(course_id: "C300581", user_id: "U824115")
+      parser.import_file!("data/003.csv")
+      parser.active_enrollments.include?(enrollment).must_equal true
+    end
+  end
+
+  describe "#active_users" do
+    it "must return active users" do
+      parser = Parser.new
+      user = User.new(user_id: "U213037")
+      parser.import_file!("data/002.csv")
+      parser.active_users.include?(user).must_equal true
+    end
+  end
 end
