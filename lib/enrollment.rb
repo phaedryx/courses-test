@@ -1,8 +1,10 @@
 class Enrollment
   attr_accessor :course_id, :user_id, :state
 
-  def initialize(args)
-    
+  def initialize(args = {})
+    @course_id = args[:course_id]
+    @user_id   = args[:user_id]
+    @state     = args[:state]
   end
 
   def ==(comparison_enrollment)

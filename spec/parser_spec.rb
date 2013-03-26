@@ -71,5 +71,29 @@ describe Parser do
       @parser.import_file!("test_data/user.csv")
       @parser.users.include?(user).must_equal true
     end
+
+    it "must replace a course with its modified version if encountered" do
+      parser = Parser.new
+      parser.import_file!("test_data/course.csv")
+      parser.import_file!("test_data/modified_course.csv")
+      parser.courses.size.must_equal 1 # replaced, not appended
+      parser.courses.first.course_name.must_equal "Suicidal Psychology"
+    end
+
+    it "must replace an enrollment with its modified version if encountered" do
+      parser = Parser.new
+      parser.import_file!("test_data/enrollment.csv")
+      parser.import_file!("test_data/modified_enrollment.csv")
+      parser.enrollments.size.must_equal 1 # replace, not appended
+      parser.enrollments.first.state.must_equal "deleted"
+    end
+
+    it "must replace a user with its modified version if encountered" do
+      parser = Parser.new
+      parser.import_file!("test_data/user.csv")
+      parser.import_file!("test_data/modified_user.csv")
+      parser.users.size.must_equal 1 # replaced
+      parser.users.first.user_name.must_equal "Noah J. Thomas"
+    end
   end
 end
