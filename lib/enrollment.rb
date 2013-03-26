@@ -1,13 +1,17 @@
 class Enrollment
-  attr_accessor :course_id, :user_id, :state
+  attr_accessor :course, :user, :state
 
   def initialize(args = {})
-    @course_id = args[:course_id]
-    @user_id   = args[:user_id]
-    @state     = args[:state]
+    @course = args[:course]
+    @user   = args[:user]
+    @state  = args[:state]
   end
 
-  def ==(comparison_enrollment)
-    self.course_id == comparison_enrollment.course_id && self.user_id == comparison_enrollment.user_id 
+  def ==(enrollment)
+    self.course == enrollment.course && self.user == enrollment.user
+  end
+
+  def active?
+    self.state == "active" && self.course.active? && self.user.active?
   end
 end

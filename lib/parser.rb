@@ -46,42 +46,35 @@ class Parser
   end
 
   def active_courses
-    @courses.find_all {|c| c.state == "active"}
+    @courses.find_all {|c| c.active?}
   end
 
   def active_enrollments
-    @enrollments.
-      find_all {|e| e.state == "active" }.
-      find_all {|e| active_courses.map(&:course_id).include?(e.course_id) }.
-      find_all {|e| active_users.map(&:user_id).include?(e.user_id) }
+    @enrollments.find_all {|e| e.active?}
   end
 
   def active_users
-    @users.find_all {|u| u.state == "active"}
+    @users.find_all {|u| u.active?}
   end
 
 private
   def import_courses(path)
     CSV.foreach(path, headers: true) do |row|
       course = Course.new(course_id: row["course_id"], course_name: row["course_name"], state: row["state"])
-      index = @courses.index(course)
-      if index
-        @courses[index] = course
-      else
-        @courses << course
-      end
+      index  = @courses.index(course)
+
+      index ? @courses[index] = course : @courses << course
     end
   end
 
   def import_enrollments(path)
     CSV.foreach(path, headers: true) do |row|
-      enrollment = Enrollment.new(course_id: row["course_id"], user_id: row["user_id"], state: row["state"])
-      index = @enrollments.index(enrollment)
-      if index
-        @enrollments[index] = enrollment
-      else
-        @enrollments << enrollment
-      end
+      course     = @courses.find {|c| c.course_id == row["course_id"]}
+      user       = @users.find {|u| u.user_id == row["user_id"]}
+      enrollment = Enrollment.new(course: course, user: user, state: row["state"])
+      index      = @enrollments.index(enrollment)
+
+      index ? @enrollments[index] = enrollment : @enrollments << enrollment
     end
   end
 
@@ -89,11 +82,8 @@ private
     CSV.foreach(path, headers: true) do |row|
       user = User.new(user_id: row["user_id"], user_name: row["user_name"], state: row["state"])
       index = @users.index(user)
-      if index
-        @users[index] = user
-      else
-        @users << user
-      end
+
+      index ? @users[index] = user : @users << user
     end
   end
 end

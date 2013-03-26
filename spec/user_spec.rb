@@ -10,4 +10,18 @@ describe User do
       (original_user == comparison_user).must_equal true
     end
   end
+
+  describe "#active?" do
+    it "must return true if the user has an active state" do
+      user = User.new
+      user.state = "active"
+      user.active?.must_equal true
+    end
+
+    it "must return false if the user state is not active" do
+      user = User.new
+      user.state = "deleted"
+      user.active?.must_equal false
+    end
+  end
 end

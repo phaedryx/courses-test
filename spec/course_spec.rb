@@ -10,4 +10,12 @@ describe Course do
       (original_course == comparison_course).must_equal true
     end
   end
+
+  describe "#active?" do
+    it "must return true if the course state is active" do
+      course = Course.new
+      course.state = "active"
+      course.active?.must_equal true
+    end
+  end
 end

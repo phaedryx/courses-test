@@ -10,4 +10,8 @@ class Course
   def ==(comparison_course)
     self.course_id == comparison_course.course_id
   end
+
+  def active?
+    self.state == "active"
+  end
 end

@@ -10,4 +10,8 @@ class User
   def ==(comparison_user)
     self.user_id == comparison_user.user_id
   end
+
+  def active?
+    self.state == "active"
+  end
 end
