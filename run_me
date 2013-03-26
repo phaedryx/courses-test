@@ -4,13 +4,17 @@ require './lib/parser'
 
 parser = Parser.new
 data_dir = "./data"
+
 # import all the csv files
 Dir.entries(data_dir).find_all {|f| f =~ /\.csv/}.sort.each do |file_name|
-  puts file_name
   parser.import_file!("#{data_dir}/#{file_name}")
 end
 
 # output courses with enrolled students
-parser.active_enrollments.each do ||
-
+# when grouping, first element is the course, second element is an array of corresponding active enrollments
+parser.active_enrollments.group_by {|e| e.course}.sort {|a,b| a.first.course_name <=> b.first.course_name}.each do |enrollment_group|
+  puts enrollment_group.first.course_name
+  enrollment_group.last.sort {|a,b| a.user.user_name <=> b.user.user_name}.each do |enrollment|
+    puts "  " + enrollment.user.user_name
+  end
 end
